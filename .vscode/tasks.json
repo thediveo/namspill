@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "go test (debug)",
+            "type": "shell",
+            "command": "go",
+            "args": [
+                "test",
+                "-c",
+                "-o",
+                "${fileDirname}/__debug_bin"
+            ],
+            "options": {
+                "cwd": "${fileDirname}",
+            },
+        }
+    ]
+}
