@@ -16,11 +16,15 @@ package namspill
 
 import "github.com/thediveo/namspill/task"
 
+// Task represents an individual Linux task (thread) of the running Go process;
+// it is a type alias for task.Task.
+type Task = task.Task
+
 // Tasks returns information about the tasks currently belonging to this
 // process. If the tasks cannot properly be determined, Tasks returns nil
 // instead.
 //
 // This is a re-export of the task.Tasks discovery function for convenience.
-func Tasks() []task.Task {
+func Tasks() []Task {
 	return task.Tasks()
 }
