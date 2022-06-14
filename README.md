@@ -55,8 +55,10 @@ Instead, the Go scheduler "wedges" the initial thread and never schedules any
 goroutine to it again.
 
 This situation not least will (correctly) trigger failed `namspill` assertions.
-To the initial thread getting wedged, simply lock it in an `init` function to
-the initial/main goroutine:
+To avoid the initial thread getting wedged, simply lock it in an `init` function
+to the initial/main goroutine, so it never ends up getting scheduled on any
+other goroutine (that might be subjected to locking it to a thread and then
+terminating it while being locked):
 
 ```go
 func init() {
