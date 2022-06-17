@@ -69,7 +69,9 @@ func tasks(procroot string) []Task {
 	for _, tid := range tids {
 		task := newTask(procroot, tid, leader)
 		if task.TID == 0 {
-			return nil
+			// this task has already terminated while we're gathering the
+			// details, so we have to ignore it.
+			continue
 		}
 		tasks = append(tasks, task)
 	}
@@ -77,7 +79,8 @@ func tasks(procroot string) []Task {
 }
 
 // newTask returns a Task for the taks with the given task ID (TID) and task
-// leader.
+// leader. If the specified TID doesn't exist anymore, newTask returns a Task
+// zero value.
 func newTask(procroot string, TID uint32, leader uint32) Task {
 	namespaceItems, err := ioutil.ReadDir(fmt.Sprintf(procroot+"/proc/%d/ns", TID))
 	if err != nil {
