@@ -64,7 +64,7 @@ var _ = Describe("task discovery", func() {
 	})
 
 	It("fails correctly with invalid tasks", func() {
-		Expect(tasks("./test")).To(BeNil())
+		Expect(tasks("./test")).To(BeEmpty())
 	})
 
 	It("prints a Task", func() {

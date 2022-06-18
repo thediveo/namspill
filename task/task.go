@@ -16,7 +16,6 @@ package task
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"sort"
 	"strconv"
@@ -28,6 +27,12 @@ type Task struct {
 	TID        uint32            // identifier of this task.
 	Leader     uint32            // identifier of task leader or zero, if this is the task leader.
 	Namespaces map[string]uint64 // the types and identifiers of the namespaces this task is attached to.
+}
+
+// IsTask returns true, if this Task is a zero value task and thus doesn't
+// represent any alive task.
+func (t Task) IsZero() bool {
+	return t.TID == 0
 }
 
 // String returns a textual single-line representation of a task (leader) and
@@ -63,12 +68,15 @@ func Tasks() []Task {
 	return tasks("")
 }
 
+// tasks returns information about the tasks currently belonging to this
+// process, reading task information from either a real procfs instance or a
+// fake procfs surrogate for testing purposes.
 func tasks(procroot string) []Task {
 	tids, leader := GetTaskIds()
 	tasks := make([]Task, 0, len(tids))
 	for _, tid := range tids {
 		task := newTask(procroot, tid, leader)
-		if task.TID == 0 {
+		if task.IsZero() {
 			// this task has already terminated while we're gathering the
 			// details, so we have to ignore it.
 			continue
@@ -82,7 +90,7 @@ func tasks(procroot string) []Task {
 // leader. If the specified TID doesn't exist anymore, newTask returns a Task
 // zero value.
 func newTask(procroot string, TID uint32, leader uint32) Task {
-	namespaceItems, err := ioutil.ReadDir(fmt.Sprintf(procroot+"/proc/%d/ns", TID))
+	namespaceItems, err := os.ReadDir(fmt.Sprintf(procroot+"/proc/%d/ns", TID))
 	if err != nil {
 		return Task{}
 	}
@@ -123,7 +131,7 @@ func GetTaskIds() (taskids []uint32, taskleaderid uint32) {
 }
 
 func getTaskIds(procroot string, PID uint32) (taskids []uint32, taskleaderid uint32) {
-	procfsTaskDirItems, err := ioutil.ReadDir(fmt.Sprintf(procroot+"/proc/%d/task", PID))
+	procfsTaskDirItems, err := os.ReadDir(fmt.Sprintf(procroot+"/proc/%d/task", PID))
 	if err != nil || len(procfsTaskDirItems) == 0 {
 		return nil, 0
 	}
