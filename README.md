@@ -103,3 +103,22 @@ For further background information, please see the following references:
   the finger to the scheduler source code where the initial thread, a.k.a. "M0",
   turns out to be special after all.
 
+## Make Targets
+
+- `make`: lists all targets.
+- `make coverage`: runs all tests with coverage and then **updates the coverage
+  badge in `README.md`**.
+- `make pkgsite`: installs [`x/pkgsite`](golang.org/x/pkgsite/cmd/pkgsite), as
+  well as the [`browser-sync`](https://www.npmjs.com/package/browser-sync) and
+  [`nodemon`](https://www.npmjs.com/package/nodemon) npm packages first, if not
+  already done so. Then runs the `pkgsite` and hot reloads it whenever the
+  documentation changes.
+- `make report`: installs
+  [`@gojp/goreportcard`](https://github.com/gojp/goreportcard) if not yet done
+  so and then runs it on the code base.
+- `make test`: runs all tests.
+
+## Copyright and License
+
+`namspill` is Copyright 2022, 2022 Harald Albrecht, and licensed under the
+Apache License, Version 2.0.
