@@ -3,6 +3,7 @@
 [![PkgGoDev](https://img.shields.io/badge/-reference-blue?logo=go&logoColor=white&labelColor=505050)](https://pkg.go.dev/github.com/thediveo/namspill)
 [![GitHub](https://img.shields.io/github/license/thediveo/namspill)](https://img.shields.io/github/license/thediveo/namspill)
 [![Go Report Card](https://goreportcard.com/badge/github.com/thediveo/namspill)](https://goreportcard.com/report/github.com/thediveo/namspill)
+![Coverage](https://img.shields.io/badge/Coverage-100.0%25-brightgreen)
 
 > ℹ️ If you don't switch Linux-kernel namespaces and don't use a Go module that
 > does, you most probably don't need to fret about `namspill`. 
