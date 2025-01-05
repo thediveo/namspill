@@ -2,6 +2,7 @@
 
 [![PkgGoDev](https://img.shields.io/badge/-reference-blue?logo=go&logoColor=white&labelColor=505050)](https://pkg.go.dev/github.com/thediveo/namspill)
 [![GitHub](https://img.shields.io/github/license/thediveo/namspill)](https://img.shields.io/github/license/thediveo/namspill)
+![build and test](https://github.com/thediveo/namspill/actions/workflows/buildandtest.yaml/badge.svg?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/thediveo/namspill)](https://goreportcard.com/report/github.com/thediveo/namspill)
 ![Coverage](https://img.shields.io/badge/Coverage-100.0%25-brightgreen)
 
@@ -19,6 +20,9 @@ rather, the lack thereof) when switching namespaces in a Go program.
 [Ginkgo](https://github.com/onsi/ginkgo) BDD testing framework and the
 [Gomega](https://github.com/onsi/gomega) matcher/assertion library. (It may be
 used also outside Ginkgo/Gomega, but such usage is out of scope.)
+
+For devcontainer instructions, please see the [section "DevContainer"
+below](#devcontainer).
 
 ## Install
 
@@ -106,19 +110,25 @@ For further background information, please see the following references:
 ## Make Targets
 
 - `make`: lists all targets.
-- `make coverage`: runs all tests with coverage and then **updates the coverage
-  badge in `README.md`**.
-- `make pkgsite`: installs [`x/pkgsite`](golang.org/x/pkgsite/cmd/pkgsite), as
-  well as the [`browser-sync`](https://www.npmjs.com/package/browser-sync) and
-  [`nodemon`](https://www.npmjs.com/package/nodemon) npm packages first, if not
-  already done so. Then runs the `pkgsite` and hot reloads it whenever the
-  documentation changes.
-- `make report`: installs
-  [`@gojp/goreportcard`](https://github.com/gojp/goreportcard) if not yet done
-  so and then runs it on the code base.
 - `make test`: runs all tests.
+- `make coverage`: deprecated, use the `gocover` CLI command in the devcontainer
+  instead.
+- `make report`: deprecated, use the `goreportcard-cli` CLI command in the
+  devcontainer instead.
+
+## DevContainer
+
+> [!CAUTION]
+>
+> Do **not** use VSCode's "~~Dev Containers: Clone Repository in Container
+> Volume~~" command, as it is utterly broken by design, ignoring
+> `.devcontainer/devcontainer.json`.
+
+1. `git clone https://github.com/thediveo/enumflag`
+2. in VSCode: Ctrl+Shift+P, "Dev Containers: Open Workspace in Container..."
+3. select `enumflag.code-workspace` and off you go...
 
 ## Copyright and License
 
-`namspill` is Copyright 2022, 2022 Harald Albrecht, and licensed under the
+`namspill` is Copyright 2022, 2025 Harald Albrecht, and licensed under the
 Apache License, Version 2.0.
