@@ -24,12 +24,6 @@ used also outside Ginkgo/Gomega, but such usage is out of scope.)
 For devcontainer instructions, please see the [section "DevContainer"
 below](#devcontainer).
 
-## Install
-
-```bash
-go get github.com/thediveo/namspill
-```
-
 ## Usage
 
 In its simplest form, just after each test gather information about the
@@ -107,15 +101,6 @@ For further background information, please see the following references:
   the finger to the scheduler source code where the initial thread, a.k.a. "M0",
   turns out to be special after all.
 
-## Make Targets
-
-- `make`: lists all targets.
-- `make test`: runs all tests.
-- `make coverage`: deprecated, use the `gocover` CLI command in the devcontainer
-  instead.
-- `make report`: deprecated, use the `goreportcard-cli` CLI command in the
-  devcontainer instead.
-
 ## DevContainer
 
 > [!CAUTION]
@@ -124,9 +109,19 @@ For further background information, please see the following references:
 > Volume~~" command, as it is utterly broken by design, ignoring
 > `.devcontainer/devcontainer.json`.
 
-1. `git clone https://github.com/thediveo/enumflag`
+1. `git clone https://github.com/thediveo/namspill`
 2. in VSCode: Ctrl+Shift+P, "Dev Containers: Open Workspace in Container..."
-3. select `enumflag.code-workspace` and off you go...
+3. select `namspill.code-workspace` and off you go...
+
+## Supported Go Versions
+
+`netdb` supports versions of Go that are noted by the [Go release
+policy](https://golang.org/doc/devel/release.html#policy), that is, major
+versions _N_ and _N_-1 (where _N_ is the current major version).
+
+## Contributing
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Copyright and License
 

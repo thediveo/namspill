@@ -26,7 +26,7 @@ var _ = Describe("task discovery", func() {
 	It("discovers the tasks of this process", func() {
 		l, err := net.Listen("tcp", "localhost:0")
 		Expect(err).NotTo(HaveOccurred())
-		defer l.Close()
+		defer func() { _ = l.Close() }()
 
 		go func() {
 			defer GinkgoRecover()

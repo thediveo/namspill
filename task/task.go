@@ -29,7 +29,7 @@ type Task struct {
 	Namespaces map[string]uint64 // the types and identifiers of the namespaces this task is attached to.
 }
 
-// IsTask returns true, if this Task is a zero value task and thus doesn't
+// IsZero returns true, if this Task is a zero value task and thus doesn't
 // represent any alive task.
 func (t Task) IsZero() bool {
 	return t.TID == 0

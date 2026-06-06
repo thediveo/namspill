@@ -19,9 +19,10 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/thediveo/namspill/task"
+
 	"github.com/onsi/gomega/format"
 	"github.com/onsi/gomega/types"
-	"github.com/thediveo/namspill/task"
 )
 
 // BeUniformlyNamespaced succeeds if the actual value is a slice of Task

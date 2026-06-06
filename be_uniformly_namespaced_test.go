@@ -21,8 +21,9 @@ import (
 	"github.com/thediveo/lxkns/nstest"
 	"github.com/thediveo/lxkns/ops"
 	"github.com/thediveo/lxkns/species"
-	"github.com/thediveo/namspill/task"
 	"github.com/thediveo/testbasher"
+
+	"github.com/thediveo/namspill/task"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
