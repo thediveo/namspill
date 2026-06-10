@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/onsi/ginkgo/v2 v2.29.0
 	github.com/thediveo/spacetest v0.12.1
-	github.com/thediveo/testily v0.3.1
+	github.com/thediveo/testily v0.5.0
 )
 
 require (

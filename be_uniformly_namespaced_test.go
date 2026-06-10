@@ -17,9 +17,9 @@ package namspill
 import (
 	"context"
 	"os"
-	"sync"
 
 	"github.com/thediveo/spacetest/netns"
+	"github.com/thediveo/testily/chans"
 	"github.com/thediveo/testily/nothing"
 
 	"github.com/thediveo/namspill/task"
@@ -90,9 +90,8 @@ var _ = Describe("uniform namespacing", func() {
 			Skip("needs root")
 		}
 
-		finishCh := make(chan nothing.Nothing)
-		finish := sync.OnceFunc(func() { close(finishCh) })
-		defer finish()
+		finishCh, finish := chans.Make[nothing.Nothing]()
+		defer finish() // ...make sure to always finish
 
 		attached := make(chan nothing.Nothing)
 		detached := make(chan nothing.Nothing)

@@ -53,8 +53,8 @@ github.com/thediveo/spacetest v0.12.1 h1:30DRKL3h45/zVjHe19xVIHgOgsf/WRMC1mnc9ts
 github.com/thediveo/spacetest v0.12.1/go.mod h1:Jk7cZ27m/uIuX28dLpktX/cHfjmtSs5kNepGDWNzrYI=
 github.com/thediveo/success v1.3.1 h1:SQ/ICN55yYxyEpgh0XGQwG+A4mMLGa2MYp+fxnIKoYs=
 github.com/thediveo/success v1.3.1/go.mod h1:Wlj+S4i3x4pLZEO/OY/cEDfpChUoxw02BRYjcGjH+Zw=
-github.com/thediveo/testily v0.3.1 h1:2Dk2f2+oqWKsD5ffmGeeG7/V0W8UoSMcDUtUDIKoTJ4=
-github.com/thediveo/testily v0.3.1/go.mod h1:KZydbcD88zlIVc6YCUCtXOK7gdAZ5kMrCzKnpBf3kwc=
+github.com/thediveo/testily v0.5.0 h1:UW7JemS3HDDOqYEM5za7fjYkv632tdAhsyiZkccCj0Y=
+github.com/thediveo/testily v0.5.0/go.mod h1:KZydbcD88zlIVc6YCUCtXOK7gdAZ5kMrCzKnpBf3kwc=
 github.com/tidwall/gjson v1.18.0 h1:FIDeeyB800efLX89e5a8Y0BNH+LOngJyGrIWxG2FKQY=
 github.com/tidwall/gjson v1.18.0/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/match v1.1.1 h1:+Ho715JplO36QYgwN9PGYNhgZvoUSc9X2c80KVTi+GA=
