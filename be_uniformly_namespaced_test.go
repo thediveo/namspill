@@ -15,21 +15,26 @@
 package namspill
 
 import (
-	"fmt"
+	"context"
 	"os"
+	"sync"
 
-	"github.com/thediveo/lxkns/nstest"
-	"github.com/thediveo/lxkns/ops"
-	"github.com/thediveo/lxkns/species"
-	"github.com/thediveo/testbasher"
+	"github.com/thediveo/spacetest/netns"
+	"github.com/thediveo/testily/nothing"
 
 	"github.com/thediveo/namspill/task"
+
+	"github.com/onsi/gomega/gexec"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("uniform namespacing", func() {
+
+	AfterAll(func() {
+		gexec.CleanupBuildArtifacts()
+	})
 
 	It("is normal uniformly namespaced", func() {
 		m := BeUniformlyNamespaced()
@@ -80,48 +85,32 @@ var _ = Describe("uniform namespacing", func() {
 			`Expected\n\s+Task Leader PID: 1, foo:\[1\]\n\s+Task TID: 2, bar:\[2\], foo:\[1\]\nnot to have uniform namespace IDs per task`))
 	})
 
-	It("detects non-uniform namespacing", func() {
+	It("detects non-uniform namespacing", func(ctx context.Context) {
 		if os.Getuid() != 0 {
 			Skip("needs root")
 		}
 
-		By("creating a new network namespace")
-		scripts := testbasher.Basher{}
-		defer scripts.Done()
-		scripts.Common(nstest.NamespaceUtilsScript)
-		scripts.Script("main", `unshare -Unr $stage2`)
-		scripts.Script("stage2", `
-echo $$
-read
-`)
-		cmd := scripts.Start("main")
-		defer cmd.Close()
-		var unsharedpid int
-		cmd.Decode(&unsharedpid)
-		Expect(unsharedpid).NotTo(BeZero())
+		finishCh := make(chan nothing.Nothing)
+		finish := sync.OnceFunc(func() { close(finishCh) })
+		defer finish()
 
-		By("switching a separate goroutine into new network namespace")
-		switched := make(chan struct{})
-		done := make(chan struct{})
-		unswitched := make(chan struct{})
-		newnetns := ops.NewTypedNamespacePath(
-			fmt.Sprintf("/proc/%d/ns/net", unsharedpid),
-			species.CLONE_NEWNET,
-		)
+		attached := make(chan nothing.Nothing)
+		detached := make(chan nothing.Nothing)
 		go func() {
 			defer GinkgoRecover()
-			By("about to visit in new goroutine")
-			err := ops.Visit(func() {
-				defer GinkgoRecover()
-				By("visiting goroutine")
-				close(switched)
-				Eventually(done).Should(BeClosed())
-			}, newnetns)
-			Expect(err).NotTo(HaveOccurred())
-			close(unswitched)
+			By("about to attach to network namespace in new goroutine")
+			netns.Execute(netns.NewTransient(),
+				func() {
+					defer GinkgoRecover()
+					By("switched goroutine")
+					close(attached)
+					// stay attached until we are signalled to finish
+					Eventually(finishCh).Should(BeClosed())
+				})
+			close(detached)
 		}()
-		By("waiting for switching done")
-		Eventually(switched).Should(BeClosed())
+		By("waiting for attachment completed")
+		Eventually(attached).Should(BeClosed())
 
 		By("checking task namespacing")
 		m := BeUniformlyNamespaced()
@@ -130,8 +119,8 @@ read
 		Expect(success).To(BeFalse())
 
 		By("restoring things")
-		close(done)
-		Eventually(unswitched).Should(BeClosed())
+		finish()
+		Eventually(detached).Should(BeClosed())
 		Expect(Tasks()).To(BeUniformlyNamespaced())
 	})
 
