@@ -30,7 +30,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("uniform namespacing", func() {
+var _ = Describe("uniform namespacing", Ordered, func() {
 
 	AfterAll(func() {
 		gexec.CleanupBuildArtifacts()
