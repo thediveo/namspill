@@ -24,17 +24,11 @@ import (
 
 	"github.com/thediveo/namspill/task"
 
-	"github.com/onsi/gomega/gexec"
-
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("uniform namespacing", Ordered, func() {
-
-	AfterAll(func() {
-		gexec.CleanupBuildArtifacts()
-	})
 
 	It("is normal uniformly namespaced", func() {
 		m := BeUniformlyNamespaced()
